@@ -22,7 +22,7 @@ knit        : slidify::knit2slides
 2. Points (x, y)  on a noisy line yo = y + random_normal_error(mean_err, sd_err)  are generated  for a given mean and sd .  
 3. A linear regression model  is fit through reference line and noisy line . 
 4. User is given Plot options  of Points  and Line/Smooth. 
-5. User can manipultate slope, intercept, mean of error, sd of error and re-plot .
+5. User can manipultate slope, intercept, mean of error, sd of error and create new plots .
 6. User can study the effects of various parameters on the  reference and noisy lines . 
 
 --- .class #id 

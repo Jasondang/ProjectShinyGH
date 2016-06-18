@@ -1,6 +1,5 @@
 #server.R
 library(shiny)
-library(UsingR)
 library(ggplot2)
 
 
