@@ -1,0 +1,595 @@
+--- 
+title       : Interactive Noise/Error Manipulation 
+subtitle    : An "Interactive Shiny Project" Presentation Pitch
+author      : dd1947in
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---bg:url(assets/fig/shiny_proj.png)
+
+---   
+
+## A Very Brief Description  
+  One can study and get better in any subject  with the use of interactive applications . Interactive applications are very important tools to demonstrate  products and ideas to a wider audience.   This presentation is submitted to pitch an "Interactive Shiny Project".  
+  
+   The following slides show a a list of plots  that are generated in "Interactive Shiny Project"  that accompany these project pitch  slides .  The following methodology  is followed in the design of the "Interactive Shiny Project".  
+
+1. Points (x, y)   on a reference line  y = s1 * x + c1  are generated for a given slope and intercept. 
+2. Points (x, y)  on a noisy line yo = y + random_normal_error(mean_err, sd_err)  are generated  for a given mean and sd .  
+3. A linear regression model  is fit through reference line and noisy line . 
+4. User is given Plot options  of Points  and Line/Smooth. 
+5. User can manipultate slope, intercept, mean of error, sd of error and create new plots .
+6. User can study the effects of various parameters on the  reference and noisy lines . 
+
+--- .class #id 
+
+### Plot 1 : Beta = 1; Y-int = 0; Mean = 0; SD = 0 ; Type = point
+
+```{r echo=FALSE}
+
+library(ggplot2)
+
+      x <- seq(from=0, to=500, by=10)
+      beta <- 1
+      yint <- 0
+      mean1 <- 0
+      sd1 <- 0 
+      plot_type <- "point"
+      y <-  x * beta + yint   
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+
+
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+       
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+
+---  
+
+### Plot 2 : Beta = 1; Y-int = 0; Mean = 0; SD = 50 ; Type = point
+
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- 0
+      sd1 <- 50 
+      plot_type <- "point"
+      y <-  x * beta + yint   
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+
+
+---  
+
+### Plot 3 : Beta = 1; Y-int = 0; Mean = -50; SD = 50 ; Type = point
+
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- -50
+      sd1 <- 50 
+      plot_type <- "point"
+      ya <-  x * beta + yint   
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+---  
+
+### Plot 4 : Beta = 1; Y-int = 0; Mean = 50; SD = 50 ; Type = point
+
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- 50
+      sd1 <- 50 
+      plot_type <- "point"
+      ya <-  x * beta + yint  
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+---  
+
+### Plot 5 : Beta = 1; Y-int = 0; Mean = -50; SD = 50 ; Type = line/smooth  
+  
+
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- -50
+      sd1 <- 50 
+      plot_type <- "line"
+      y <-  x * beta + yint    
+
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+---   
+    
+
+### Plot 6 : Beta = 1; Y-int = 0; Mean = 50; SD = 50 ; Type = line/smooth  
+  
+  
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- 50
+      sd1 <- 50 
+      plot_type <- "line"
+      y <-  x * beta + yint  
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green"  ),  size=2 ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+---  
+
+### Plot 7 : Beta = -1; Y-int = 0; Mean = 0; SD = 0 ; Type = point  
+  
+
+```{r echo=FALSE}
+      beta <- -1 
+      yint <- 300
+      mean1 <- -50
+      sd1 <- 50 
+      plot_type <- "point"
+      y <-  x * beta + yint    
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+---  
+
+### Plot 8 : Beta = -1; Y-int = 300; Mean = 50; SD = 50 ; Type = point  
+     
+
+```{r echo=FALSE}
+      beta <- -1 
+      yint <- 300
+      mean1 <- 50
+      sd1 <- 50 
+      plot_type <- "point"
+      y <-  x * beta + yint  
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```
+
+---   
+   
+   
+### Plot 9 : Beta = 1; Y-int = 0; Mean = -50; SD = 0 ; Type = point  
+   
+   
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- -50
+      sd1 <- 0 
+      plot_type <- "point"
+      y <-  x * beta + yint  
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+```   
+
+---     
+   
+### Plot 10 : Beta = 1; Y-int = 0; Mean = 50; SD = 0 ; Type = point  
+  
+
+```{r echo=FALSE}
+      beta <- 1 
+      yint <- 0
+      mean1 <- 50
+      sd1 <- 0 
+      plot_type <- "point"
+      y <-  x * beta + yint  
+
+      y1 = yint
+      y2 = yint + 500 * beta
+      if(y1 > y2) {
+        ymax = y1
+      } else {
+        ymax = y2
+      }
+      # this is for positioning text labels on plot
+      ymax = abs(500 * beta) * 2.0  + abs(sd1 + 200) * 1.25
+      yfactor =  ymax / 750 
+      
+
+
+      yo <- y + rnorm(length(x), mean=mean1, sd=sd1)
+      dfa_xy <- data.frame(x=x, y=y, yo=yo)
+      
+      lmfit_o <- lm(yo ~ x, data=dfa_xy)
+      lmfit_a <- lm(y ~ x, data=dfa_xy)
+       
+      xfit <- c(0, 500)
+      yfit <- c (lmfit_o$coeff[1][1], 500 * lmfit_o$coeff[2][1] +lmfit_o$coeff[1][1])
+      dfo_xy <- data.frame(x=xfit, y=yfit)
+      
+      
+      g <- ggplot(dfa_xy) 
+      if(plot_type == "point") {
+            g <- g + geom_point(aes(x=x, y=y,  colour="green" ) ) + geom_point(aes(x=x, y=yo, colour="red")) 
+      } else {
+             g <- g + geom_smooth(aes(x=x, y=y,  colour="green" ),  size=2  ) + geom_smooth(aes(x=x, y=yo, colour="red"),  size=2 ) 
+
+      }
+      g <- g + annotate("text", x=80, y=ymax - 10 * yfactor, label = paste("Reference Line Slope = ", round(lmfit_a$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 40 * yfactor, label = paste("Reference Line Y-Int = ", round(lmfit_a$coeff[1][1], 4)))
+      
+       
+      g <- g + annotate("text", x=80, y=ymax - 90 * yfactor, label = paste("Noisy line Slope = ", round(lmfit_o$coeff[2][1], 4)))
+      g <- g + annotate("text", x=80, y=ymax - 120 * yfactor, label = paste("Noisy Line Y-Int = ", round(lmfit_o$coeff[1][1], 4)))      
+      g <- g + geom_line(data=dfo_xy, aes(x=x, y=y,  colour="1" ), linetype=1)
+      g <- g + geom_line( aes(x=x, y=y,  colour="10" ), linetype=1)
+      g
+    
+```

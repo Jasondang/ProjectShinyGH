@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Noise/Error Manipulation</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Interactive Noise/Error Manipulation">
+  <meta name="author" content="dd1947in">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Interactive Noise/Error Manipulation</h1>
+    <h2>An &quot;Interactive Shiny Project&quot; Presentation Pitch</h2>
+    <p>dd1947in<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:url(assets/fig/shiny_proj.png);">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>A Very Brief Description</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>One can study and get better in any subject  with the use of interactive applications . Interactive applications are very important tools to demonstrate  products and ideas to a wider audience.   This presentation is submitted to pitch an &quot;Interactive Shiny Project&quot;.  </p>
+
+<p>The following slides show a a list of plots  that are generated in &quot;Interactive Shiny Project&quot;  that accompany these project pitch  slides .  The following methodology  is followed in the design of the &quot;Interactive Shiny Project&quot;.  </p>
+
+<ol>
+<li>Points (x, y)   on a reference line  y = s1 * x + c1  are generated for a given slope and intercept. </li>
+<li>Points (x, y)  on a noisy line yo = y + random_normal_error(mean_err, sd_err)  are generated  for a given mean and sd .<br></li>
+<li>A linear regression model  is fit through reference line and noisy line . </li>
+<li>User is given Plot options  of Points  and Line/Smooth. </li>
+<li>User can manipultate slope, intercept, mean of error, sd of error and re-plot .</li>
+<li>User can study the effects of various parameters on the  reference and noisy lines . </li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>Plot 1 : Beta = 1; Y-int = 0; Mean = 0; SD = 0 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h3>Plot 2 : Beta = 1; Y-int = 0; Mean = 0; SD = 50 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h3>Plot 3 : Beta = 1; Y-int = 0; Mean = -50; SD = 50 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h3>Plot 4 : Beta = 1; Y-int = 0; Mean = 50; SD = 50 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h3>Plot 5 : Beta = 1; Y-int = 0; Mean = -50; SD = 50 ; Type = line/smooth</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h3>Plot 6 : Beta = 1; Y-int = 0; Mean = 50; SD = 50 ; Type = line/smooth</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h3>Plot 7 : Beta = -1; Y-int = 0; Mean = 0; SD = 0 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h3>Plot 8 : Beta = -1; Y-int = 300; Mean = 50; SD = 50 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h3>Plot 9 : Beta = 1; Y-int = 0; Mean = -50; SD = 0 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h3>Plot 10 : Beta = 1; Y-int = 0; Mean = 50; SD = 0 ; Type = point</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='A Very Brief Description'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Plot 1 : Beta = 1; Y-int = 0; Mean = 0; SD = 0 ; Type = point'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Plot 2 : Beta = 1; Y-int = 0; Mean = 0; SD = 50 ; Type = point'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Plot 3 : Beta = 1; Y-int = 0; Mean = -50; SD = 50 ; Type = point'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Plot 4 : Beta = 1; Y-int = 0; Mean = 50; SD = 50 ; Type = point'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Plot 5 : Beta = 1; Y-int = 0; Mean = -50; SD = 50 ; Type = line/smooth'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Plot 6 : Beta = 1; Y-int = 0; Mean = 50; SD = 50 ; Type = line/smooth'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Plot 7 : Beta = -1; Y-int = 0; Mean = 0; SD = 0 ; Type = point'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Plot 8 : Beta = -1; Y-int = 300; Mean = 50; SD = 50 ; Type = point'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Plot 9 : Beta = 1; Y-int = 0; Mean = -50; SD = 0 ; Type = point'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Plot 10 : Beta = 1; Y-int = 0; Mean = 50; SD = 0 ; Type = point'>
+         12
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
